@@ -59,12 +59,11 @@
                           <Component id="btnHapus" min="-2" pref="176" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                          <Component id="txtKelembapan" min="-2" pref="156" max="-2" attributes="0"/>
+                          <Component id="txtKelembapan" min="-2" pref="162" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtKecepatanAngin" min="-2" pref="162" max="-2" attributes="0"/>
+                          <Component id="txtKecepatanAngin" min="-2" pref="173" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtTekanan" min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="txtTekanan" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
@@ -286,26 +285,24 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                      <Component id="lblSuhu" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblNamaKota" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <Component id="lblInformasiCuaca" min="-2" pref="133" max="-2" attributes="0"/>
+                      <Component id="lblInformasiCuaca" min="-2" pref="133" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblKondisiCuaca" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblNamaKota" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                  <Component id="lblSuhu" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblKondisiCuaca" min="-2" pref="106" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -318,9 +315,9 @@
                       <Component id="lblNamaKota" min="-2" pref="18" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblSuhu" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblKondisiCuaca" min="-2" pref="16" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="lblKondisiCuaca" min="-2" pref="16" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -335,15 +332,22 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNamaKota">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Jakarta, Indonesia"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblSuhu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="1"/>
+                  <Font name="Tahoma" size="24" style="1"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="28&#xb0; C"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblKondisiCuaca">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cerah Berawan"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
