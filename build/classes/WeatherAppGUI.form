@@ -28,7 +28,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" pref="729" max="-2" attributes="0"/>
+          <Component id="jPanel1" min="-2" pref="705" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -44,30 +44,29 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel4" max="32767" attributes="0"/>
-                      <Component id="jPanel3" max="32767" attributes="0"/>
-                      <Component id="lblRiwayatPencarian" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="btnSimpan" min="-2" pref="169" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="btnMuatData" min="-2" pref="166" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnHapus" min="-2" pref="176" max="-2" attributes="0"/>
+                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <Component id="btnHapus" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="lblRiwayatPencarian" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                          <Component id="txtKelembapan" min="-2" pref="156" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtKecepatanAngin" min="-2" pref="162" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtTekanan" min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="txtKelembapan" min="-2" pref="162" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="txtKecepatanAngin" min="-2" pref="173" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="txtTekanan" min="-2" pref="164" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jPanel4" max="32767" attributes="0"/>
+                      <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -75,7 +74,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -85,17 +84,17 @@
                       <Component id="txtKecepatanAngin" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="txtTekanan" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblRiwayatPencarian" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="lblRiwayatPencarian" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="171" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnHapus" max="32767" attributes="0"/>
-                      <Component id="btnMuatData" max="32767" attributes="0"/>
-                      <Component id="btnSimpan" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnMuatData" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnSimpan" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnHapus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="243" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -259,6 +258,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tambah Favorit"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahFavoritActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnHapusFavorit">
               <Properties>
@@ -286,41 +288,33 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                      <Component id="lblSuhu" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblNamaKota" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <Component id="lblInformasiCuaca" min="-2" pref="133" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblKondisiCuaca" min="-2" pref="106" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lbliconCuaca" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Component id="lblKondisiCuaca" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNamaKota" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblInformasiCuaca" min="-2" pref="133" max="-2" attributes="0"/>
+                          <Component id="lblSuhu" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblInformasiCuaca" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="106" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lbliconCuaca" min="-2" pref="109" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="lblNamaKota" min="-2" pref="18" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblSuhu" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Component id="lblKondisiCuaca" min="-2" pref="16" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -339,11 +333,13 @@
             <Component class="javax.swing.JLabel" name="lblSuhu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="1"/>
+                  <Font name="Tahoma" size="24" style="1"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblKondisiCuaca">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbliconCuaca">
             </Component>
           </SubComponents>
         </Container>

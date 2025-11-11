@@ -3,71 +3,105 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.JSONObject;
+import org.json.JSONArray;
+import java.util.Locale;
 
 public class WeatherAPI {
 
-    // GANTI DENGAN API KEY OPENWEATHERMAP KAMU
-    private static final String API_KEY = "64c1ee392ee3eac118a8324485370af1";
-    private static final String BASE_URL = "https://home.openweathermap.org/api_keys";
+    // **GANTI DENGAN API KEY OPENWEATHERMAP YANG VALID**
+    private static final String API_KEY = "64c1ee392ee3eac118a8324485370af1"; 
+    
+    // PERBAIKAN KRITIS: BASE_URL yang benar untuk data current weather
+    private static final String BASE_URL =
+    "https://api.openweathermap.org/data/2.5/weather?q=";
 
+    /**
+     * Mengambil data cuaca dari OpenWeatherMap.
+     * @param city Nama kota yang dicari.
+     * @return Objek WeatherData yang berisi informasi cuaca.
+     * @throws Exception jika terjadi kegagalan koneksi atau data tidak ditemukan.
+     */
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static WeatherData getWeather(String city) throws Exception {
-        String urlStr = BASE_URL + city + "&appid=" + API_KEY + "&units=metric&lang=en"; // lang=en agar deskripsi konsisten
-        URL url = new URL(urlStr);
+        // unit=metric untuk Celcius, lang=id untuk deskripsi cuaca Bahasa Indonesia
+        String urlStr = BASE_URL + city + "&appid=" + API_KEY + "&units=metric&lang=id";
+    URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setConnectTimeout(8000);
-        conn.setReadTimeout(8000);
+    conn.setRequestMethod("GET");
+    conn.setConnectTimeout(8000);
+    conn.setReadTimeout(8000);
 
-        int code = conn.getResponseCode();
+    int code = conn.getResponseCode();
+
+        // --- Penanganan Error Koneksi/API ---
         if (code != 200) {
-            throw new RuntimeException("Gagal ambil data (" + code + "). Cek nama kota / API key.");
+             try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(conn.getErrorStream()))) {
+                 StringBuilder errorSb = new StringBuilder();
+                 String errorLine;
+                 while ((errorLine = errorReader.readLine()) != null) errorSb.append(errorLine);
+                 
+                 JSONObject errorJson = new JSONObject(errorSb.toString());
+                 String message = errorJson.optString("message", "Terjadi kesalahan yang tidak diketahui (Kode: " + code + "). Pastikan nama kota benar.");
+                 
+                 // Melemparkan exception dengan pesan yang lebih informatif
+                 throw new RuntimeException("Gagal ambil data (" + code + "): " + message);
+            } catch (Exception parseEx) {
+                 throw new RuntimeException("Gagal mengambil data. Response Code: " + code + ". (Mungkin masalah koneksi atau server)");
+            }
         }
 
+        // --- Membaca Response Sukses (BufferedReader sudah benar) ---
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) sb.append(line);
         reader.close();
 
+        // --- Parsing JSON ---
         JSONObject obj = new JSONObject(sb.toString());
 
-        String namaKota = obj.optString("name", city);
-        String negara = obj.optJSONObject("sys") != null ? obj.getJSONObject("sys").optString("country", "") : "";
-        String kondisiEN = obj.getJSONArray("weather").getJSONObject(0).getString("description"); // ex: scattered clouds
-        String iconCode = obj.getJSONArray("weather").getJSONObject(0).getString("icon");        // ex: 03d
-        double suhu = obj.getJSONObject("main").getDouble("temp");
-        int kelembapan = obj.getJSONObject("main").getInt("humidity");
-        int tekanan = obj.getJSONObject("main").getInt("pressure");
-        double anginMS = obj.getJSONObject("wind").getDouble("speed"); // m/s
+        // Lokasi
+        String namaKota = obj.getString("name");
+        String negara = obj.getJSONObject("sys").getString("country");
 
-        String kondisiID = toIndonesianTitle(kondisiEN); // sedikit translasi + title case
+        // Main data
+        JSONObject main = obj.getJSONObject("main");
+        double suhu = main.getDouble("temp");
+        int kelembapan = main.getInt("humidity");
+        int tekanan = main.getInt("pressure"); // hPa/mb
 
-        return new WeatherData(namaKota, negara, suhu, kondisiID, kelembapan, tekanan, anginMS, iconCode);
+        // Cuaca
+        JSONArray weatherArray = obj.getJSONArray("weather");
+        JSONObject weather = weatherArray.getJSONObject(0);
+        String kondisi = weather.getString("description");
+        String iconCode = weather.getString("icon");
+        
+        // Angin
+        JSONObject wind = obj.getJSONObject("wind");
+        double anginMS = wind.getDouble("speed"); // m/s
+
+        // Kembalikan objek data cuaca
+        return new WeatherData(namaKota, negara, suhu, capitalize(kondisi), 
+                               kelembapan, tekanan, anginMS, iconCode);
     }
-
-    // Translasi ringan EN -> ID + Title Case
-    private static String toIndonesianTitle(String en) {
-        String s = en.toLowerCase();
-        s = s.replace("clear sky", "cerah")
-             .replace("few clouds", "cerah berawan")
-             .replace("scattered clouds", "berawan")
-             .replace("broken clouds", "berawan tebal")
-             .replace("overcast clouds", "mendung")
-             .replace("light rain", "hujan ringan")
-             .replace("moderate rain", "hujan sedang")
-             .replace("heavy intensity rain", "hujan lebat")
-             .replace("thunderstorm", "badai petir")
-             .replace("mist", "kabut");
-        // Title Case sederhana
-        String[] parts = s.split("\\s+");
-        StringBuilder out = new StringBuilder();
-        for (String p : parts) {
-            if (p.isEmpty()) continue;
-            out.append(Character.toUpperCase(p.charAt(0))).append(p.substring(1)).append(" ");
+    
+    /** Mengubah huruf awal setiap kata menjadi kapital. */
+    private static String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                result.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1).toLowerCase(Locale.ROOT))
+                    .append(" ");
+            }
         }
-        return out.toString().trim();
+        return result.toString().trim();
     }
-
+    
+    // --- Kelas Data Model (Inner Class) ---
     public static class WeatherData {
         private final String namaKota;
         private final String negara;
@@ -82,7 +116,7 @@ public class WeatherAPI {
                            int kelembapan, int tekanan, double anginMS, String iconCode) {
             this.namaKota = namaKota;
             this.negara = negara;
-            this.suhu = suhu;
+            this.suhu = Math.round(suhu * 10) / 10.0; // Bulatkan 1 desimal
             this.kondisi = kondisi;
             this.kelembapan = kelembapan;
             this.tekanan = tekanan;
@@ -90,18 +124,13 @@ public class WeatherAPI {
             this.iconCode = iconCode;
         }
 
-        public String getNamaKota() { return namaKota; }
-        public String getNegara() { return negara; }
+        // --- Getters ---
         public double getSuhu() { return suhu; }
         public String getKondisi() { return kondisi; }
         public int getKelembapan() { return kelembapan; }
-        public int getTekanan() { return tekanan; }
-        public double getAnginMS() { return anginMS; }
+        public int getTekanan() { return tekanan; } // hPa/mb
         public String getIconCode() { return iconCode; }
-
-        public double getAnginKMH() { return anginMS * 3.6; } // konversi m/s -> km/h
-        public String getKotaNegara() {
-            return negara == null || negara.isEmpty() ? namaKota : (namaKota + ", " + negara);
-        }
+        public String getKotaNegara() { return namaKota + ", " + negara; }
+        public double getAnginKMH() { return Math.round(anginMS * 3.6); } // Konversi m/s ke km/h
     }
 }
