@@ -10,6 +10,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
     
     private final DefaultTableModel model;
     private static final String DEFAULT_COMBO_TEXT = "Pilih kota favorit...";
+    private boolean sedangMemuatFavorit;
     
     public WeatherAppGUI() {
     initComponents();
@@ -27,7 +28,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
     txtKecepatanAngin.setEditable(false);
     txtTekanan.setEditable(false);
 
-    // --- Event Handler: Tambah Favorit (SQLite) ---
+    // Event Handler: Tambah Favorit (SQLite)
     btnTambahFavorit.addActionListener(e -> {
         String kota = txtNamaKota.getText().trim();
         if (!kota.isEmpty()) {
@@ -39,7 +40,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     });
 
-    // --- Event Handler: Hapus Favorit (SQLite) ---
+    // Event Handler: Hapus Favorit (SQLite)
     btnHapusFavorit.addActionListener(e -> {
         String selectedCity = (String) cbmbxFavorit.getSelectedItem();
         if (selectedCity != null && !selectedCity.equals(DEFAULT_COMBO_TEXT)) {
@@ -51,18 +52,19 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     });
 
-    // --- Event Handler: Pilih dari Favorit ---
+    // vent Handler: Pilih dari Favorit
     cbmbxFavorit.addActionListener(e -> {
-        String selectedCity = (String) cbmbxFavorit.getSelectedItem();
-        if (selectedCity != null && !selectedCity.equals(DEFAULT_COMBO_TEXT)) {
-            txtNamaKota.setText(selectedCity);
-            cekCuaca(selectedCity);
-        }
-    });
+    if (sedangMemuatFavorit) return; // ⛔ Jangan jalankan saat update ComboBox
+
+    String selectedCity = (String) cbmbxFavorit.getSelectedItem();
+    if (selectedCity != null && !selectedCity.equals(DEFAULT_COMBO_TEXT)) {
+        txtNamaKota.setText(selectedCity);
+        cekCuaca(selectedCity);
+    }
+});
 
     // CSV & Riwayat
     btnSimpan.addActionListener(e -> simpanCSV());
-    btnMuatData.addActionListener(e -> muatCSV());
     btnHapus.addActionListener(e -> hapusRiwayat());
 
     resetTampilan();
@@ -105,7 +107,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCuaca = new javax.swing.JTable();
         btnSimpan = new javax.swing.JButton();
-        btnMuatData = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -217,15 +218,19 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbliconCuaca, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblKondisiCuaca)
-                    .addComponent(lblNamaKota)
-                    .addComponent(lblInformasiCuaca, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSuhu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(195, 195, 195))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbliconCuaca, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblKondisiCuaca)
+                            .addComponent(lblNamaKota)
+                            .addComponent(lblSuhu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(210, 210, 210))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblInformasiCuaca)
+                        .addGap(218, 218, 218))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,11 +275,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpan.setText("Simpan ke CSV");
 
-        btnMuatData.setBackground(new java.awt.Color(121, 101, 193));
-        btnMuatData.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnMuatData.setForeground(new java.awt.Color(255, 255, 255));
-        btnMuatData.setText("Muat Data");
-
         btnHapus.setBackground(new java.awt.Color(221, 168, 83));
         btnHapus.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,16 +290,14 @@ public class WeatherAppGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnMuatData, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
                         .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblRiwayatPencarian)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtKelembapan, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(txtKecepatanAngin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(txtTekanan, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -325,7 +323,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMuatData, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(243, 243, 243))
@@ -339,7 +336,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -385,7 +382,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCekCuaca;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnHapusFavorit;
-    private javax.swing.JButton btnMuatData;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambahFavorit;
     private javax.swing.JComboBox<String> cbmbxFavorit;
@@ -435,17 +431,17 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     }
 
-    // ===================== LOAD FAVORIT (SQLite) ======================
     private void loadFavoritKeComboBox() {
-        cbmbxFavorit.removeAllItems();
-        cbmbxFavorit.addItem(DEFAULT_COMBO_TEXT);
+    sedangMemuatFavorit = true; // memblokir event ComboBox sementara
+    cbmbxFavorit.removeAllItems();
+    cbmbxFavorit.addItem(DEFAULT_COMBO_TEXT);
 
-        for (String kota : DatabaseManager.getFavorit()) {
-            cbmbxFavorit.addItem(kota);
-        }
+    for (String kota : DatabaseManager.getFavorit()) {
+        cbmbxFavorit.addItem(kota);
     }
+    sedangMemuatFavorit = false; // mengaktifkan kembali event
+}
 
-    // ===================== RESET ======================
     private void resetTampilan() {
         lblNamaKota.setText("-");
         lblSuhu.setText("- °C");
@@ -460,7 +456,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     }
 
-    // ===================== ICON CUACA ======================
     private void tampilkanIcon(String iconCode) {
         try {
             URL url = new URL("https://openweathermap.org/img/wn/" + iconCode + "@2x.png");
@@ -473,7 +468,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     }
 
-    // ===================== CSV ======================
     private void simpanCSV() {
         JFileChooser chooser = new JFileChooser();
         chooser.setSelectedFile(new File("riwayat_cuaca.csv"));
@@ -503,30 +497,8 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         }
     }
 
-    private void muatCSV() {
-        JFileChooser chooser = new JFileChooser();
-        if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
-
-        File file = chooser.getSelectedFile();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            model.setRowCount(0);
-            br.readLine(); // skip header
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                model.addRow(line.split(","));
-            }
-
-            JOptionPane.showMessageDialog(this, "Berhasil dimuat!");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal memuat CSV.");
-        }
-    }
-
     private void hapusRiwayat() {
         model.setRowCount(0);
-        JOptionPane.showMessageDialog(this, "Riwayat dihapus.");
+    JOptionPane.showMessageDialog(this, "Riwayat dihapus.");
     }
 }

@@ -28,7 +28,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" pref="705" max="-2" attributes="0"/>
+          <Component id="jPanel1" min="-2" pref="721" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -49,9 +49,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="btnSimpan" min="-2" pref="169" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                          <Component id="btnMuatData" min="-2" pref="166" max="-2" attributes="0"/>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="224" max="32767" attributes="0"/>
                           <Component id="btnHapus" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lblRiwayatPencarian" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -59,7 +57,7 @@
                           <Component id="txtKelembapan" min="-2" pref="162" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="txtKecepatanAngin" min="-2" pref="173" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="31" max="32767" attributes="0"/>
                           <Component id="txtTekanan" min="-2" pref="164" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPanel4" max="32767" attributes="0"/>
@@ -90,7 +88,6 @@
                   <Component id="jScrollPane1" min="-2" pref="171" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnMuatData" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnSimpan" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnHapus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
@@ -288,16 +285,23 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbliconCuaca" min="-2" pref="118" max="-2" attributes="0"/>
-                          <Component id="lblKondisiCuaca" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNamaKota" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblInformasiCuaca" min="-2" pref="133" max="-2" attributes="0"/>
-                          <Component id="lblSuhu" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbliconCuaca" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <Component id="lblKondisiCuaca" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNamaKota" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSuhu" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lblInformasiCuaca" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -399,20 +403,6 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Simpan ke CSV"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnMuatData">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="c1" green="65" red="79" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Muat Data"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnHapus">
