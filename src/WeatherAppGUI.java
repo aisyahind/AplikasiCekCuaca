@@ -204,9 +204,9 @@ public class WeatherAppGUI extends javax.swing.JFrame {
                         .addComponent(lblAtau, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnHapusFavorit, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(btnCekCuaca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTambahFavorit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHapusFavorit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTambahFavorit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -222,18 +222,14 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(238, 238, 238)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbliconCuaca, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblKondisiCuaca)
-                            .addComponent(lblNamaKota)
-                            .addComponent(lblSuhu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(210, 210, 210))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblInformasiCuaca)
-                        .addGap(218, 218, 218))))
+                    .addComponent(lblInformasiCuaca)
+                    .addComponent(lbliconCuaca, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblKondisiCuaca)
+                    .addComponent(lblNamaKota)
+                    .addComponent(lblSuhu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,6 +256,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         lblRiwayatPencarian.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblRiwayatPencarian.setText("Riwayat Pencarian:");
 
+        tblCuaca.setBackground(new java.awt.Color(203, 220, 235));
         tblCuaca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -312,7 +309,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
                         .addComponent(txtKelembapan, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(txtKecepatanAngin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(txtTekanan, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -373,7 +370,30 @@ public class WeatherAppGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTambahFavoritActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Yakin ingin menghapus seluruh riwayat dan informasi cuaca?",
+            "Konfirmasi",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Hapus tabel riwayat
+        DefaultTableModel model = (DefaultTableModel) tblCuaca.getModel();
+        model.setRowCount(0);
+        
+        // mengosongkan semua label informasi cuaca
+        lblNamaKota.setText("");
+        lblSuhu.setText("");
+        lblKondisiCuaca.setText("");
+
+        txtKelembapan.setText("");
+        txtKecepatanAngin.setText("");
+        txtTekanan.setText("");
+
+        // Hapus icon cuaca
+        lbliconCuaca.setIcon(null);
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_btnHapusActionPerformed
 
     public static void main(String args[]) {
@@ -485,7 +505,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
             Image scaled = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             lbliconCuaca.setIcon(new ImageIcon(scaled));
             lbliconCuaca.setText(null);
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             lbliconCuaca.setText("Error");
         }
     }
